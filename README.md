@@ -1,2 +1,6 @@
 # android-weather-app
-A simple android application to show weather.
+
+### Group Members:
+- Kasra Hajian - 99109411
+- Amirreza Ghadyani - 99109206
+- Hossein Mohammadi - 99109274
