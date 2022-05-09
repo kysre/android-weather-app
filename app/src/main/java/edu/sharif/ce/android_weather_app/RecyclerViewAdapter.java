@@ -57,8 +57,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            leftTextView = itemView.findViewById(R.id.leftTextView);
-            rightTextView = itemView.findViewById(R.id.rightTextView);
+//            leftTextView = itemView.findViewById(R.id.leftTextView);
+//            rightTextView = itemView.findViewById(R.id.rightTextView);
             cardView = itemView.findViewById(R.id.mainContainerCardView);
         }
 
