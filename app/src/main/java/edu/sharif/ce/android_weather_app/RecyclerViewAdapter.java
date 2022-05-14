@@ -35,8 +35,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        holder.leftTextView.setText(list.get(position).getLeftString());
-        holder.rightTextView.setText(list.get(position).getRightString());
+        holder.dayNameTextView.setText(list.get(position).getLeftString());
+        holder.infoTextView.setText(list.get(position).getRightString());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,13 +52,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView leftTextView, rightTextView;
+        TextView dayNameTextView, infoTextView;
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-//            leftTextView = itemView.findViewById(R.id.leftTextView);
-//            rightTextView = itemView.findViewById(R.id.rightTextView);
+            dayNameTextView = itemView.findViewById(R.id.recyclerviewDayNameTextView);
+            infoTextView = itemView.findViewById(R.id.recyclerviewInfoTextView);
             cardView = itemView.findViewById(R.id.mainContainerCardView);
         }
 

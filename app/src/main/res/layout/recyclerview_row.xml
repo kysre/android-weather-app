@@ -13,30 +13,24 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="?attr/selectableItemBackground">
+
         <TextView
-            android:id="@+id/recyclerRow1TextView"
+            android:id="@+id/recyclerviewDayNameTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="day"
             android:textColor="@color/black"
-            android:textSize="26sp"
-            android:text="day"/>
+            android:textSize="26sp" />
+
         <TextView
-            android:id="@+id/recyclerRow2TextView"
+            android:id="@+id/recyclerviewInfoTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="info"
             android:textColor="@color/black"
-            android:textSize="26sp"
-            android:text="perception"/>
-        <TextView
-            android:id="@+id/recyclerRow3TextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            android:textSize="26sp"
-            android:text="temp"/>
+            android:textSize="26sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
