@@ -129,7 +129,7 @@ public class Weather {
     }
 
     public void setTemperature(double temperature) {
-        this.temperature = temperature;
+         this.temperature = temperature;
     }
 
     public void setFeelsLike(double feelsLike) {
