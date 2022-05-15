@@ -16,7 +16,7 @@ public class Weather {
     private double temperature;
     private double feelsLike;
     private double windSpeed;
-    private String weather;
+    private MainWeather weather;
     private double latitude;
     private double longitude;
     public static ArrayList<Weather> fullWeek = new ArrayList<>();
@@ -34,17 +34,29 @@ public class Weather {
             weather.setTemperature(Weather.getTemp(data[i]));
             weather.setFeelsLike(Weather.getFeelsLike(data[i]));
             weather.setWindSpeed(Weather.getSpeed(data[i]));
-            //TODO : weather main
+            weather.setWeather(weather.getWeather());
         }
         return answer;
     }
 
-    private static double getSpeed(String str){
+    private static MainWeather getMainWeather(String str){
+        int index = str.indexOf("main");
+        String answer = "";
+        int i = index + 6;
+        while (str.charAt(i)!='"'){
+            answer+=str.charAt(i);
+            i++;
+        }
+        return MainWeather.valueOf(answer);
+    }
+
+
+    private static double getSpeed(String str) {
         int index = str.indexOf("wind_speed");
         String stringAns = "";
-        int i = index+12;
-        while (str.charAt(i)!=','){
-            stringAns+=str.charAt(i);
+        int i = index + 12;
+        while (str.charAt(i) != ',') {
+            stringAns += str.charAt(i);
             i++;
         }
         return Double.parseDouble(stringAns);
@@ -104,7 +116,7 @@ public class Weather {
         return windSpeed;
     }
 
-    public String getWeather() {
+    public MainWeather getWeather() {
         return weather;
     }
 
@@ -128,7 +140,7 @@ public class Weather {
         this.windSpeed = windSpeed;
     }
 
-    public void setWeather(String weather) {
+    public void setWeather(MainWeather weather) {
         this.weather = weather;
     }
 
