@@ -1,5 +1,6 @@
 package edu.sharif.ce.android_weather_app.ui.home;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import edu.sharif.ce.android_weather_app.Model.Location;
 import edu.sharif.ce.android_weather_app.Model.MainWeather;
+import edu.sharif.ce.android_weather_app.Model.Weather;
 import edu.sharif.ce.android_weather_app.R;
 import edu.sharif.ce.android_weather_app.RecyclerViewAdapter;
 import edu.sharif.ce.android_weather_app.databinding.FragmentHomeBinding;
@@ -93,9 +97,33 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: update location after clicking
+                startAsyncTask();
             }
         });
+    }
+
+    public void startAsyncTask(){
+        new WeatherStuff(this).execute();
+    }
+
+    private class WeatherStuff extends AsyncTask<Void,Void,Void> {
+        private WeakReference<HomeFragment> homeFragmentWeakReference;
+        WeatherStuff(HomeFragment fragment){
+            homeFragmentWeakReference = new WeakReference<>(fragment);
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            HomeFragment activity = homeFragmentWeakReference.get();
+            if(activity.cityNameEditText.getText().toString().equals("")){
+                Weather.start(Double.parseDouble(longitudeEditText.getText().toString())
+                        ,Double.parseDouble(latitudeEditText.getText().toString()));
+            }else{
+                Location location=Location.findCoordinate(activity.cityNameEditText.
+                        getText().toString());
+                Weather.start(location.getLongitude(),location.getLatitude());
+            }
+            return null;
+        }
     }
 
     @Override
