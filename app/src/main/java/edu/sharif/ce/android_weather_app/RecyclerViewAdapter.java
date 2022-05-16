@@ -82,8 +82,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ListItem(String dayName, String minTemp, String maxTemp, MainWeather weatherCondition) {
             this.dayName = dayName;
-            this.minTemp = minTemp;
-            this.maxTemp = maxTemp;
+            this.minTemp = minTemp + "\u00B0";
+            this.maxTemp = maxTemp + "\u00B0";
             this.weatherCondition = weatherCondition;
         }
 
