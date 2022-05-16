@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Locale;
 
 import edu.sharif.ce.android_weather_app.Model.MainWeather;
 
@@ -37,12 +38,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
         holder.dayNameTextView.setText(list.get(position).getDayName());
         holder.minTempTextView.setText(list.get(position).getMinTemp());
         holder.maxTempTextView.setText(list.get(position).getMaxTemp());
-        // TODO: set ImageView
-
+        Context context = holder.iconImageView.getContext();
+        int iconId = context.getResources().getIdentifier(
+                list.get(position).getWeatherCondition().toString().toLowerCase(Locale.ROOT),
+                "drawable", context.getPackageName());
+        holder.iconImageView.setImageResource(iconId);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
