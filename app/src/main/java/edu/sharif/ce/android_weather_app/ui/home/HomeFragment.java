@@ -14,8 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
+import edu.sharif.ce.android_weather_app.Model.MainWeather;
 import edu.sharif.ce.android_weather_app.R;
 import edu.sharif.ce.android_weather_app.RecyclerViewAdapter;
 import edu.sharif.ce.android_weather_app.databinding.FragmentHomeBinding;
@@ -31,6 +35,8 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
     private EditText latitudeEditText;
     private Button enterButton;
     private RecyclerView weatherRecyclerView;
+    private RecyclerViewAdapter adapter;
+    private ArrayList<RecyclerViewAdapter.ListItem> listItems;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +60,18 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         coordinatesSwitch = view.findViewById(R.id.coordinatesSwitch);
         enterButton = view.findViewById(R.id.enterLocation);
         weatherRecyclerView = view.findViewById(R.id.weatherRecyclerView);
+
+        weatherRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        listItems = new ArrayList<>();
+        // TODO: add weather stuff
+        listItems.add(new RecyclerViewAdapter.ListItem(
+                "Sat", "18", "24", MainWeather.Clouds));
+        listItems.add(new RecyclerViewAdapter.ListItem(
+                "Sun", "20", "34", MainWeather.Clear));
+        listItems.add(new RecyclerViewAdapter.ListItem(
+                "Mon", "20", "34", MainWeather.Ash));
+        adapter = new RecyclerViewAdapter(getActivity(), listItems, this);
+        weatherRecyclerView.setAdapter(adapter);
 
 
         coordinatesSwitch.setChecked(false);
