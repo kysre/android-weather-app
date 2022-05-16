@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import edu.sharif.ce.android_weather_app.Model.MainWeather;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -35,8 +38,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        holder.dayNameTextView.setText(list.get(position).getLeftString());
-        holder.infoTextView.setText(list.get(position).getRightString());
+        holder.dayNameTextView.setText(list.get(position).getDayName());
+        holder.minTempTextView.setText(list.get(position).getMinTemp());
+        holder.maxTempTextView.setText(list.get(position).getMaxTemp());
+        // TODO: set ImageView
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,41 +57,63 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView dayNameTextView, infoTextView;
+        TextView dayNameTextView, minTempTextView, maxTempTextView;
+        ImageView iconImageView;
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             dayNameTextView = itemView.findViewById(R.id.recyclerviewDayNameTextView);
-            infoTextView = itemView.findViewById(R.id.recyclerviewInfoTextView);
+            minTempTextView = itemView.findViewById(R.id.recyclerviewMinTempTextView);
+            maxTempTextView = itemView.findViewById(R.id.recyclerviewMaxTempTextView);
+            iconImageView = itemView.findViewById(R.id.recyclerviewIconImageView);
             cardView = itemView.findViewById(R.id.mainContainerCardView);
         }
-
     }
 
     public static class ListItem {
-        private String leftString;
-        private String rightString;
+        private String dayName;
+        private String minTemp;
+        private String maxTemp;
+        private MainWeather weatherCondition;
 
-        public ListItem(String leftString, String rightString) {
-            this.leftString = leftString;
-            this.rightString = rightString;
+        public ListItem(String dayName, String minTemp, String maxTemp, MainWeather weatherCondition) {
+            this.dayName = dayName;
+            this.minTemp = minTemp;
+            this.maxTemp = maxTemp;
+            this.weatherCondition = weatherCondition;
         }
 
-        public String getLeftString() {
-            return leftString;
+        public String getDayName() {
+            return dayName;
         }
 
-        public String getRightString() {
-            return rightString;
+        public String getMinTemp() {
+            return minTemp;
         }
 
-        public void setLeftString(String leftString) {
-            this.leftString = leftString;
+        public String getMaxTemp() {
+            return maxTemp;
         }
 
-        public void setRightString(String rightString) {
-            this.rightString = rightString;
+        public MainWeather getWeatherCondition() {
+            return weatherCondition;
+        }
+
+        public void setDayName(String dayName) {
+            this.dayName = dayName;
+        }
+
+        public void setMinTemp(String minTemp) {
+            this.minTemp = minTemp;
+        }
+
+        public void setMaxTemp(String maxTemp) {
+            this.maxTemp = maxTemp;
+        }
+
+        public void setWeatherCondition(MainWeather weatherCondition) {
+            this.weatherCondition = weatherCondition;
         }
     }
 
