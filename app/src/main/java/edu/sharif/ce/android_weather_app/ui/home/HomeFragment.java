@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -135,5 +136,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
     @Override
     public void onItemClicked(RecyclerViewAdapter.ListItem listItem) {
         // TODO: goto day weather forecast
+        NavHostFragment.findNavController(HomeFragment.this).navigate(
+                HomeFragmentDirections.actionNavigationHomeToWeatherViewFragment());
     }
 }

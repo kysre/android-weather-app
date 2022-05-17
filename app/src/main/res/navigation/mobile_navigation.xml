@@ -9,11 +9,24 @@
         android:id="@+id/navigation_home"
         android:name="edu.sharif.ce.android_weather_app.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_weatherViewFragment"
+            app:destination="@id/weatherViewFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_preferences"
         android:name="edu.sharif.ce.android_weather_app.ui.preferences.PreferencesFragment"
         android:label="@string/title_preferences"
         tools:layout="@layout/fragment_preferences" />
+    <fragment
+        android:id="@+id/weatherViewFragment"
+        android:name="edu.sharif.ce.android_weather_app.ui.WeatherViewFragment"
+        android:label="fragment_weather_view"
+        tools:layout="@layout/fragment_weather_view">
+        <action
+            android:id="@+id/action_weatherViewFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>
