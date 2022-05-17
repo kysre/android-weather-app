@@ -103,27 +103,48 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         });
     }
 
-    public void startAsyncTask(){
-        new WeatherStuff(this).execute();
+    public void startAsyncTask() {
+        GetWeatherDataAsyncTask getWeatherDataAsyncTask = new GetWeatherDataAsyncTask(this);
+        getWeatherDataAsyncTask.execute();
     }
 
-    private class WeatherStuff extends AsyncTask<Void,Void,Void> {
+    private class GetWeatherDataAsyncTask extends AsyncTask<Void, Void, Void> {
         private WeakReference<HomeFragment> homeFragmentWeakReference;
-        WeatherStuff(HomeFragment fragment){
+        private String cityName;
+        private double longitude, latitude;
+        private boolean isCoordinates;
+
+        GetWeatherDataAsyncTask(HomeFragment fragment) {
             homeFragmentWeakReference = new WeakReference<>(fragment);
         }
+
+        @Override
+        protected void onPreExecute() {
+            HomeFragment fragment = homeFragmentWeakReference.get();
+            if (fragment == null || fragment.isRemoving()) return;
+            isCoordinates = fragment.cityNameEditText.getText().toString().equals("");
+            if (isCoordinates) {
+                longitude = Double.parseDouble(fragment.longitudeEditText.getText().toString());
+                latitude = Double.parseDouble(fragment.latitudeEditText.getText().toString());
+            } else {
+                cityName = fragment.cityNameEditText.getText().toString();
+            }
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
-            HomeFragment activity = homeFragmentWeakReference.get();
-            if(activity.cityNameEditText.getText().toString().equals("")){
-                Weather.start(Double.parseDouble(longitudeEditText.getText().toString())
-                        ,Double.parseDouble(latitudeEditText.getText().toString()));
-            }else{
-                Location location=Location.findCoordinate(activity.cityNameEditText.
-                        getText().toString());
-                Weather.start(location.getLongitude(),location.getLatitude());
+            if (isCoordinates) {
+                Weather.start(longitude, latitude);
+            } else {
+                Location location = Location.findCoordinate(cityName);
+                Weather.start(location.getLongitude(), location.getLatitude());
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
         }
     }
 
