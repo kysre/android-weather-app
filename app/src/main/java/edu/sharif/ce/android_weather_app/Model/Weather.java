@@ -19,7 +19,7 @@ public class Weather {
     private MainWeather weather;
     private double latitude;
     private double longitude;
-    public static ArrayList<Weather> fullWeek = new ArrayList<>();
+    public static ArrayList<Weather> fullWeek;
 
     public static void start(double longitude, double latitude) {
         String[] details = getDetail(latitude, longitude);
@@ -93,7 +93,6 @@ public class Weather {
                 result.append(line);
             }
             rd.close();
-            System.out.println(result.toString());
             String allData = result.toString();
             String[] allDays = allData.split("sunrise");
             return allDays;
@@ -102,6 +101,10 @@ public class Weather {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static ArrayList<Weather> getFullWeek() {
+        return fullWeek;
     }
 
     public double getTemperature() {

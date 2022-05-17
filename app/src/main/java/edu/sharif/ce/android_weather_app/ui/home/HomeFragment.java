@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
 
         weatherRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listItems = new ArrayList<>();
-        // TODO: add weather stuff
+        // TODO: add cached weather stuff
         listItems.add(new RecyclerViewAdapter.ListItem(
                 "Sat", "18", "24", MainWeather.Clouds));
         listItems.add(new RecyclerViewAdapter.ListItem(
@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
 
         @Override
         protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
+            // TODO: set RecyclerView rows
         }
     }
 
@@ -156,7 +156,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
 
     @Override
     public void onItemClicked(RecyclerViewAdapter.ListItem listItem) {
-        // TODO: goto day weather forecast
+        // TODO: pass weather data to WeatherViewFragment
         NavHostFragment.findNavController(HomeFragment.this).navigate(
                 HomeFragmentDirections.actionNavigationHomeToWeatherViewFragment());
     }
