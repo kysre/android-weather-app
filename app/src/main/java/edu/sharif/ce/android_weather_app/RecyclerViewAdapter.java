@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context context;
     private List<ListItem> list;
     private SelectListener listener;
+
 
     public RecyclerViewAdapter(Context context, List<ListItem> list, SelectListener listener) {
         this.context = context;
@@ -53,6 +55,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 listener.onItemClicked(list.get(position));
             }
         });
+
     }
 
     @Override
@@ -90,7 +93,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ListItem(Weather weather) {
             this.weather = weather;
             this.dayName = weather.getDay();
-            this.weatherCondition = weather.getWeather();
+            this.weatherCondition = weather.getMainWeather();
             this.minTemp = String.format("%.0f", weather.getLowTemperature()) + "\u00B0";
             this.maxTemp = String.format("%.0f", weather.getHighTemperature()) + "\u00B0";
             this.feelsLike = String.format("%.0f", weather.getFeelsLike()) + "\u00B0";

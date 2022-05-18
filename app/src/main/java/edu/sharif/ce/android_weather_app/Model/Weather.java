@@ -1,5 +1,13 @@
 package edu.sharif.ce.android_weather_app.Model;
 
+//import android.arch.persistence.room.Entity;
+
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +17,7 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class Weather {
@@ -19,17 +28,42 @@ public class Weather {
     private double feelsLike;
     private double windSpeed;
     private double moonPhase;
-    private MainWeather weather;
+    private MainWeather mainWeather;
     private double latitude;
     private double longitude;
     private String day;
+
+//    public static DataDao dao;
+//    public static LiveData<List<Weather>> cashWeather;
+
+    private String hash;
+
     public static ArrayList<Weather> fullWeek;
 
     public static void start(double longitude, double latitude) {
         String[] details = getDetail(latitude, longitude);
         fullWeek = arrangeData(details,latitude,longitude);
         setDays();
+
+//        Weather weather = new Weather();
+//
+//        RoomDB roomDB = RoomDB.getInstance(weather.getC());
+//        dao = roomDB.dataDao();
+//        cashWeather = dao.getAllData();
+//
+//        String s0 = fullWeek.get(0).toString();
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                dao.insert(s0);
+//            }
+//        }).start();
     }
+
+//    public Context getC() {
+//        return getContext();
+//    }
 
 
     public static ArrayList<Weather> arrangeData(String[] data,double latitude,double longitude) {
@@ -42,9 +76,10 @@ public class Weather {
             weather.setLowTemperature(temps[1]);
             weather.setFeelsLike(Weather.getFeelsLike(data[i]));
             weather.setWindSpeed(Weather.getSpeed(data[i]));
-            weather.setWeather(Weather.getMainWeather(data[i]));
+            weather.setMainWeather(Weather.getMainWeather(data[i]));
             weather.setMoonPhase(Weather.getMoonPhase(data[i]));
             weather.setHumidity(Weather.getHumidity(data[i]));
+            weather.setHash(weather.createHash(weather.latitude, weather.longitude));
             weather.setLatitude(latitude);
             weather.setLongitude(longitude);
             answer.add(weather);
@@ -246,8 +281,8 @@ public class Weather {
         return windSpeed;
     }
 
-    public MainWeather getWeather() {
-        return weather;
+    public MainWeather getMainWeather() {
+        return mainWeather;
     }
 
     public double getLatitude() {
@@ -270,8 +305,8 @@ public class Weather {
         this.windSpeed = windSpeed;
     }
 
-    public void setWeather(MainWeather weather) {
-        this.weather = weather;
+    public void setMainWeather(MainWeather mainWeather) {
+        this.mainWeather = mainWeather;
     }
 
     public void setLatitude(double latitude) {
@@ -284,6 +319,23 @@ public class Weather {
 
     public void setHighTemperature(double highTemperature) {
         this.highTemperature = highTemperature;
+    }
+
+    public void setHash(@NonNull String hash) {
+        this.hash = hash;
+    }
+
+    @NonNull
+    public String getHash() {
+        return hash;
+    }
+
+    public String createHash(double latitude, double longitude) {
+        String result = "A";
+        result += longitude;
+        result += "T";
+        result += latitude;
+        return result;
     }
 
     public void setLowTemperature(double lowTemperature) {
@@ -312,7 +364,7 @@ public class Weather {
                 ", feelsLike=" + feelsLike +
                 ", windSpeed=" + windSpeed +
                 ", moonPhase=" + moonPhase +
-                ", weather=" + weather +
+                ", weather=" + mainWeather +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", day='" + day + '\'' +
