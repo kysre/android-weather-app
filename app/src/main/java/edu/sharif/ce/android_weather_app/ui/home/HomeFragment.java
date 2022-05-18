@@ -103,9 +103,6 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cityNameEditText.setText("");
-                latitudeEditText.setText("");
-                longitudeEditText.setText("");
                 startAsyncTask();
             }
         });

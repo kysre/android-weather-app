@@ -204,6 +204,7 @@ public class Weather {
         int inn = index+10;
         while (str.charAt(inn)!=','){
             stringAns+=str.charAt(inn);
+            inn++;
         }
         return Double.parseDouble(stringAns);
     }
