@@ -1,6 +1,8 @@
 package edu.sharif.ce.android_weather_app.ui.home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -43,6 +45,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
     private RecyclerView weatherRecyclerView;
     private RecyclerViewAdapter adapter;
     private ArrayList<RecyclerViewAdapter.ListItem> listItems;
+    private static boolean internet = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -165,12 +168,17 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if (isCoordinates) {
-                Weather.start(longitude, latitude);
-            } else {
-                Location location = Location.findCoordinate(cityName);
-                if (location != null) {
-                    Weather.start(location.getLongitude(), location.getLatitude());
+            internet = true;
+            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            internet=cm.getActiveNetworkInfo() != null;
+            if (internet) {
+                if (isCoordinates) {
+                    Weather.start(longitude, latitude);
+                } else {
+                    Location location = Location.findCoordinate(cityName);
+                    if (location != null) {
+                        Weather.start(location.getLongitude(), location.getLatitude());
+                    }
                 }
             }
             return null;
@@ -179,22 +187,28 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         @SuppressLint("NotifyDataSetChanged")
         @Override
         protected void onPostExecute(Void unused) {
-            cityNameEditText.setText("");
-            latitudeEditText.setText("");
-            longitudeEditText.setText("");
-            if (Location.isThereCity) {
-                ArrayList<Weather> weatherArrayList = Weather.getFullWeek();
-                ArrayList<RecyclerViewAdapter.ListItem> newListItems = new ArrayList<>();
-                for (Weather weather : weatherArrayList) {
-                    newListItems.add(new RecyclerViewAdapter.ListItem(weather));
+            if (internet) {
+                cityNameEditText.setText("");
+                latitudeEditText.setText("");
+                longitudeEditText.setText("");
+                if (Location.isThereCity) {
+                    ArrayList<Weather> weatherArrayList = Weather.getFullWeek();
+                    ArrayList<RecyclerViewAdapter.ListItem> newListItems = new ArrayList<>();
+                    for (Weather weather : weatherArrayList) {
+                        newListItems.add(new RecyclerViewAdapter.ListItem(weather));
+                    }
+                    listItems.clear();
+                    listItems.addAll(newListItems);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast toast = Toast.makeText(getActivity(), "this city not found", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Location.isThereCity = true;
                 }
-                listItems.clear();
-                listItems.addAll(newListItems);
-                adapter.notifyDataSetChanged();
             } else {
-                Toast toast = Toast.makeText(getActivity(), "this city not found", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getActivity(), "does not internet connection", Toast.LENGTH_SHORT);
                 toast.show();
-                Location.isThereCity = true;
+                internet = true;
             }
         }
     }
