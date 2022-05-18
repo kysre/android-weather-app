@@ -100,9 +100,11 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
             @Override
             public void onClick(View view) {
                 startAsyncTask();
+
                 cityNameEditText.setText("");
                 latitudeEditText.setText("");
                 longitudeEditText.setText("");
+
             }
         });
     }

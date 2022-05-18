@@ -11,6 +11,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class Location {
+
     private double longitude;
     private double latitude;
     public static boolean isThereCity=true;
@@ -20,7 +21,7 @@ public class Location {
         this.latitude = latitude;
     }
 
-    public static Location findCoordinate(String cityName){
+    public static Location findCoordinate(String cityName) {
         String API_KEY = "e9eef37fb1d6417d9d14ae392d82ffb6";
         String encodeCityName = null;
         try {
@@ -28,7 +29,7 @@ public class Location {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        String urlString = "https://api.opencagedata.com/geocode/v1/json?q="+encodeCityName+"&key="+API_KEY;
+        String urlString = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeCityName + "&key=" + API_KEY;
         try {
             StringBuilder result = new StringBuilder();
             URL url = new URL(urlString);
@@ -47,6 +48,7 @@ public class Location {
         }
 
     }
+
     public static Location finding(String str) {
         int index = str.indexOf("bounds");
         int startIndexLat = str.indexOf("lat", index);
@@ -58,16 +60,16 @@ public class Location {
         int i = startIndexLat+5;
         String lat="";
         while (str.charAt(i) != ',') {
-            lat+=str.charAt(i);
+            lat += str.charAt(i);
             i++;
         }
         String lng = "";
-        i = startIndexLng+5;
+        i = startIndexLng + 5;
         while (str.charAt(i) != '}') {
-            lng+=str.charAt(i);
+            lng += str.charAt(i);
             i++;
         }
-        Location location = new Location(Double.parseDouble(lng) , Double.parseDouble(lat));
+        Location location = new Location(Double.parseDouble(lng), Double.parseDouble(lat));
         return location;
     }
 
@@ -78,4 +80,23 @@ public class Location {
     public double getLatitude() {
         return latitude;
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}';
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+
 }
+
