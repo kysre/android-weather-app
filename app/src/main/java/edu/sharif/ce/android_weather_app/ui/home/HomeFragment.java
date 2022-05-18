@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -122,6 +123,12 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         }
 
         @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
         protected void onPreExecute() {
             HomeFragment fragment = homeFragmentWeakReference.get();
             if (fragment == null || fragment.isRemoving()) return;
@@ -140,7 +147,9 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
                 Weather.start(longitude, latitude);
             } else {
                 Location location = Location.findCoordinate(cityName);
-                Weather.start(location.getLongitude(), location.getLatitude());
+                if (location != null) {
+                    Weather.start(location.getLongitude(), location.getLatitude());
+                }
             }
             return null;
         }
@@ -148,14 +157,20 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         @SuppressLint("NotifyDataSetChanged")
         @Override
         protected void onPostExecute(Void unused) {
-            ArrayList<Weather> weatherArrayList = Weather.getFullWeek();
-            ArrayList<RecyclerViewAdapter.ListItem> newListItems = new ArrayList<>();
-            for (Weather weather : weatherArrayList) {
-                newListItems.add(new RecyclerViewAdapter.ListItem(weather));
+            if(Location.isThereCity) {
+                ArrayList<Weather> weatherArrayList = Weather.getFullWeek();
+                ArrayList<RecyclerViewAdapter.ListItem> newListItems = new ArrayList<>();
+                for (Weather weather : weatherArrayList) {
+                    newListItems.add(new RecyclerViewAdapter.ListItem(weather));
+                }
+                listItems.clear();
+                listItems.addAll(newListItems);
+                adapter.notifyDataSetChanged();
+            }else{
+                Toast toast=Toast.makeText(getActivity(),"this city not found",Toast.LENGTH_SHORT);
+                toast.show();
+                Location.isThereCity=true;
             }
-            listItems.clear();
-            listItems.addAll(newListItems);
-            adapter.notifyDataSetChanged();
         }
     }
 

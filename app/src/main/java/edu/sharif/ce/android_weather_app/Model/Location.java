@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class Location {
     private double longitude;
     private double latitude;
+    public static boolean isThereCity=true;
 
     public Location(double longitude, double latitude) {
         this.longitude = longitude;
@@ -47,10 +48,13 @@ public class Location {
 
     }
     public static Location finding(String str) {
-        System.out.println();
         int index = str.indexOf("bounds");
         int startIndexLat = str.indexOf("lat", index);
         int startIndexLng = str.indexOf("lng", index);
+        if(startIndexLat==-1){
+            isThereCity=false;
+            return null;
+        }
         int i = startIndexLat+5;
         String lat="";
         while (str.charAt(i) != ',') {
