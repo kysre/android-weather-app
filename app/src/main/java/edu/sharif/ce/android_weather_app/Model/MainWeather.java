@@ -1,6 +1,7 @@
 package edu.sharif.ce.android_weather_app.Model;
 
 public enum MainWeather {
+
     Thunderstorm,
     Drizzle,
     Rain,
@@ -16,4 +17,5 @@ public enum MainWeather {
     Tornado,
     Clear,
     Clouds;
+
 }
