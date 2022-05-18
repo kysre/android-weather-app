@@ -1,5 +1,9 @@
 package edu.sharif.ce.android_weather_app.Model;
 
+//import android.arch.persistence.room.Entity;
+
+import androidx.room.Entity;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +17,7 @@ import java.util.Locale;
 
 import edu.sharif.ce.android_weather_app.ui.home.HomeFragment;
 
+@Entity(tableName = "weather")
 public class Weather {
     private double humidity;
     private double temperature;
