@@ -148,8 +148,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
 
         @Override
         protected void onPostExecute(Void unused) {
-            System.out.println("kos");
-            System.out.println(Weather.fullWeek.size());
+
         }
     }
 
