@@ -7,23 +7,93 @@
     tools:context=".ui.home.HomeFragment">
 
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/coordinatesSwitch"
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:id="@+id/locationTable"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="32dp"
-        android:text="Coordinates"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <FrameLayout
-        android:id="@+id/locationFragmentPlaceHolder"
+        <TableRow
+            android:id="@+id/cityNameTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="City Name:"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/cityNameEditText"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="City Name"
+                android:inputType="text"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/coordinatesTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/longitudeEditText"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Longitude"
+                android:inputType="number"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/latitudeEditText"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Latitude"
+                android:inputType="number"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/coordinatesSwitch"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:minHeight="32dp"
+                android:text="Coordinates"
+                android:textSize="22sp" />
+
+            <Button
+                android:id="@+id/enterLocation"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="Enter"
+                android:textSize="22sp" />
+        </TableRow>
+    </TableLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/weatherRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/coordinatesSwitch">
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@id/locationTable" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
