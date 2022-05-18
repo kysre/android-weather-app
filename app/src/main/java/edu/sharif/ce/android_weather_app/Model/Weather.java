@@ -32,10 +32,6 @@ public class Weather {
     private double latitude;
     private double longitude;
     private String day;
-
-//    public static DataDao dao;
-//    public static LiveData<List<Weather>> cashWeather;
-
     private String hash;
 
     public static ArrayList<Weather> fullWeek;
@@ -45,25 +41,8 @@ public class Weather {
         fullWeek = arrangeData(details);
         setDays();
 
-//        Weather weather = new Weather();
-//
-//        RoomDB roomDB = RoomDB.getInstance(weather.getC());
-//        dao = roomDB.dataDao();
-//        cashWeather = dao.getAllData();
-//
-//        String s0 = fullWeek.get(0).toString();
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                dao.insert(s0);
-//            }
-//        }).start();
-    }
 
-//    public Context getC() {
-//        return getContext();
-//    }
+    }
 
 
     public static ArrayList<Weather> arrangeData(String[] data) {
