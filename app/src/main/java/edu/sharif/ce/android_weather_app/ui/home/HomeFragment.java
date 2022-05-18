@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -98,12 +99,32 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!cityNameEditText.getText().toString().equals("")) {
+                    if (!checkLongitudeLatitude()) return;
+                }
                 startAsyncTask();
                 cityNameEditText.setText("");
                 latitudeEditText.setText("");
                 longitudeEditText.setText("");
             }
         });
+    }
+
+    public boolean checkLongitudeLatitude() {
+        double longitude = Double.parseDouble(longitudeEditText.getText().toString());
+        double latitude = Double.parseDouble(latitudeEditText.getText().toString());
+        String toastStr = "";
+        if (latitude >= 90 || latitude <= -90) {
+            toastStr = "Please input latitude between -90 and +90!";
+        } else if (longitude >= 180 || longitude <= -180) {
+            toastStr = "Please input longitude between -180 and +180!";
+        }
+        if (!toastStr.equals("")) {
+            Toast toast = Toast.makeText(getActivity(), toastStr, Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        return true;
     }
 
     public void startAsyncTask() {
