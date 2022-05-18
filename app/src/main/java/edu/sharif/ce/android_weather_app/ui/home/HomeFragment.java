@@ -144,7 +144,11 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
 
         @Override
         protected void onPostExecute(Void unused) {
-            // TODO: set RecyclerView rows
+            for(int i=0;i<Weather.fullWeek.size();i++){
+                Weather weather = Weather.getFullWeek().get(i);
+                System.out.println(weather.getWeather()+" "+weather.getHighTemperature()+" "
+                +weather.getLowTemperature()+" "+weather.getWindSpeed()+" "+weather.getFeelsLike());
+            }
         }
     }
 
