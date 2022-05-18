@@ -38,14 +38,14 @@ public class Weather {
 
     public static void start(double longitude, double latitude) {
         String[] details = getDetail(latitude, longitude);
-        fullWeek = arrangeData(details);
+        fullWeek = arrangeData(details,latitude,longitude);
         setDays();
 
 
     }
 
 
-    public static ArrayList<Weather> arrangeData(String[] data) {
+    public static ArrayList<Weather> arrangeData(String[] data,double latitude,double longitude) {
         ArrayList<Weather> answer = new ArrayList<>();
         for (int i = 2; i < 10; i++) {
             Weather weather = new Weather();
@@ -59,6 +59,8 @@ public class Weather {
             weather.setMoonPhase(Weather.getMoonPhase(data[i]));
             weather.setHumidity(Weather.getHumidity(data[i]));
             weather.setHash(weather.createHash(weather.latitude, weather.longitude));
+            weather.setLatitude(latitude);
+            weather.setLongitude(longitude);
             answer.add(weather);
         }
         return answer;

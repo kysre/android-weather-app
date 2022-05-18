@@ -138,5 +138,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public interface SelectListener {
         void onItemClicked(ListItem listItem);
     }
-
 }
