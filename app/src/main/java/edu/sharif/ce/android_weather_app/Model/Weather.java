@@ -300,4 +300,30 @@ public class Weather {
     public void setHumidity(double humidity) {
         this.humidity = humidity;
     }
+
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "humidity=" + humidity +
+                ", temperature=" + temperature +
+                ", highTemperature=" + highTemperature +
+                ", lowTemperature=" + lowTemperature +
+                ", feelsLike=" + feelsLike +
+                ", windSpeed=" + windSpeed +
+                ", moonPhase=" + moonPhase +
+                ", weather=" + weather +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", day='" + day + '\'' +
+                '}';
+    }
+
+    public static void setFullWeek(ArrayList<Weather> fullWeek) {
+        Weather.fullWeek = fullWeek;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 }
