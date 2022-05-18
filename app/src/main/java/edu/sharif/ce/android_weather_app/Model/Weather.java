@@ -6,7 +6,12 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
+import edu.sharif.ce.android_weather_app.ui.home.HomeFragment;
 
 public class Weather {
     private double temperature;
@@ -18,11 +23,13 @@ public class Weather {
     private MainWeather weather;
     private double latitude;
     private double longitude;
+    private String day;
     public static ArrayList<Weather> fullWeek;
 
     public static void start(double longitude, double latitude) {
         String[] details = getDetail(latitude, longitude);
         fullWeek = arrangeData(details);
+        setDays();
     }
 
 
@@ -136,6 +143,59 @@ public class Weather {
         }
     }
 
+    private static void setDays(){
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE", Locale.US);
+        String asWeek = dateFormat.format(now);
+        ArrayList<String> allDays = new ArrayList<>();
+        allDays.add("Sat");
+        allDays.add("Sun");
+        allDays.add("Mon");
+        allDays.add("Tue");
+        allDays.add("Wed");
+        allDays.add("Thu");
+        allDays.add("Fri");
+        allDays.add("Sat");
+        allDays.add("Sun");
+        allDays.add("Mon");
+        allDays.add("Tue");
+        allDays.add("Wed");
+        allDays.add("Thu");
+        allDays.add("Fri");
+        allDays.add("Sat");
+        allDays.add("Sun");
+        allDays.add("Mon");
+        allDays.add("Tue");
+        allDays.add("Wed");
+        allDays.add("Thu");
+        allDays.add("Fri");
+        int numberForCheck = 0;
+        if(asWeek.charAt(0)=='T'){
+            numberForCheck=2;
+        }else{
+            numberForCheck=1;
+        }
+        int index = 0;
+        if(numberForCheck==2){
+            for(int i=0;i<7;i++){
+                if(allDays.get(i).charAt(0)==asWeek.charAt(0)&&allDays.get(i).charAt(1)==asWeek.charAt(1)){
+                    index=i;
+                    break;
+                }
+            }
+        }else{
+            for(int i=0;i<7;i++){
+                if(allDays.get(i).charAt(0)==asWeek.charAt(0)){
+                    index=i;
+                    break;
+                }
+            }
+        }
+        for(int i=index;i<index+8;i++){
+            fullWeek.get(i-index).setDay(allDays.get(i));
+        }
+    }
+
     public static ArrayList<Weather> getFullWeek() {
         return fullWeek;
     }
@@ -150,6 +210,10 @@ public class Weather {
 
     public double getMoonPhase() {
         return moonPhase;
+    }
+
+    public String getDay() {
+        return day;
     }
 
     public double getTemperature() {
@@ -210,5 +274,9 @@ public class Weather {
 
     public void setMoonPhase(double moonPhase) {
         this.moonPhase = moonPhase;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 }
