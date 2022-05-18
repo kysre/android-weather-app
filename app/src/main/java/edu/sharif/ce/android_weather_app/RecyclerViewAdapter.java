@@ -2,6 +2,7 @@ package edu.sharif.ce.android_weather_app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 
 import edu.sharif.ce.android_weather_app.Model.MainWeather;
+import edu.sharif.ce.android_weather_app.Model.Weather;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -75,16 +77,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public static class ListItem {
+        private final Weather weather;
+        private MainWeather weatherCondition;
         private String dayName;
         private String minTemp;
         private String maxTemp;
-        private MainWeather weatherCondition;
+        private String moonPhase;
+        private String feelsLike;
+        private String windSpeed;
 
-        public ListItem(String dayName, String minTemp, String maxTemp, MainWeather weatherCondition) {
-            this.dayName = dayName;
-            this.minTemp = minTemp + "\u00B0";
-            this.maxTemp = maxTemp + "\u00B0";
-            this.weatherCondition = weatherCondition;
+        @SuppressLint("DefaultLocale")
+        public ListItem(Weather weather) {
+            this.weather = weather;
+            this.dayName = "Sat";
+            this.weatherCondition = weather.getWeather();
+            this.minTemp = String.format("%.0f", weather.getLowTemperature()) + "\u00B0";
+            this.maxTemp = String.format("%.0f", weather.getHighTemperature()) + "\u00B0";
+            this.feelsLike = String.format("%.0f", weather.getFeelsLike()) + "\u00B0";
+            this.windSpeed = String.format("%.1f", weather.getWindSpeed()) + " km/s";
+            this.moonPhase = String.format("%.0f", weather.getMoonPhase() * 100) + "%";
+        }
+
+        public MainWeather getWeatherCondition() {
+            return weatherCondition;
         }
 
         public String getDayName() {
@@ -99,24 +114,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             return maxTemp;
         }
 
-        public MainWeather getWeatherCondition() {
-            return weatherCondition;
+        public String getMoonPhase() {
+            return moonPhase;
         }
 
-        public void setDayName(String dayName) {
-            this.dayName = dayName;
+        public String getFeelsLike() {
+            return feelsLike;
         }
 
-        public void setMinTemp(String minTemp) {
-            this.minTemp = minTemp;
-        }
-
-        public void setMaxTemp(String maxTemp) {
-            this.maxTemp = maxTemp;
-        }
-
-        public void setWeatherCondition(MainWeather weatherCondition) {
-            this.weatherCondition = weatherCondition;
+        public String getWindSpeed() {
+            return windSpeed;
         }
     }
 

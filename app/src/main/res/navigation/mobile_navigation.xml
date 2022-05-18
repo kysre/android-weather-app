@@ -28,5 +28,20 @@
         <action
             android:id="@+id/action_weatherViewFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <argument
+            android:name="feelsLike"
+            app:argType="string" />
+        <argument
+            android:name="windSpeed"
+            app:argType="string" />
+        <argument
+            android:name="moonPhase"
+            app:argType="string" />
+        <argument
+            android:name="temp"
+            app:argType="string" />
+        <argument
+            android:name="mainWeather"
+            app:argType="edu.sharif.ce.android_weather_app.Model.MainWeather" />
     </fragment>
 </navigation>
