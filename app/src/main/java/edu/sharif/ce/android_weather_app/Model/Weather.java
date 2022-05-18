@@ -63,12 +63,12 @@ public class Weather {
         return MainWeather.valueOf(answer);
     }
 
-    private static double getMoonPhase(String str){
+    private static double getMoonPhase(String str) {
         int index = str.indexOf("moon_phase");
-        int i = index+12;
+        int i = index + 12;
         String answer = "";
-        while (str.charAt(i) !=','){
-            answer+=str.charAt(i);
+        while (str.charAt(i) != ',') {
+            answer += str.charAt(i);
             i++;
         }
         return Double.parseDouble(answer);
@@ -145,7 +145,7 @@ public class Weather {
         }
     }
 
-    private static void setDays(){
+    private static void setDays() {
         Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE", Locale.US);
         String asWeek = dateFormat.format(now);
@@ -172,38 +172,38 @@ public class Weather {
         allDays.add("Thu");
         allDays.add("Fri");
         int numberForCheck = 0;
-        if(asWeek.charAt(0)=='T'){
-            numberForCheck=2;
-        }else{
-            numberForCheck=1;
+        if (asWeek.charAt(0) == 'T') {
+            numberForCheck = 2;
+        } else {
+            numberForCheck = 1;
         }
         int index = 0;
-        if(numberForCheck==2){
-            for(int i=0;i<7;i++){
-                if(allDays.get(i).charAt(0)==asWeek.charAt(0)&&allDays.get(i).charAt(1)==asWeek.charAt(1)){
-                    index=i;
+        if (numberForCheck == 2) {
+            for (int i = 0; i < 7; i++) {
+                if (allDays.get(i).charAt(0) == asWeek.charAt(0) && allDays.get(i).charAt(1) == asWeek.charAt(1)) {
+                    index = i;
                     break;
                 }
             }
-        }else{
-            for(int i=0;i<7;i++){
-                if(allDays.get(i).charAt(0)==asWeek.charAt(0)){
-                    index=i;
+        } else {
+            for (int i = 0; i < 7; i++) {
+                if (allDays.get(i).charAt(0) == asWeek.charAt(0)) {
+                    index = i;
                     break;
                 }
             }
         }
-        for(int i=index;i<index+8;i++){
-            fullWeek.get(i-index).setDay(allDays.get(i));
+        for (int i = index; i < index + 8; i++) {
+            fullWeek.get(i - index).setDay(allDays.get(i));
         }
     }
 
-    private static double getHumidity(String str){
+    private static double getHumidity(String str) {
         int index = str.indexOf("humidity");
         String stringAns = "";
-        int inn = index+10;
-        while (str.charAt(inn)!=','){
-            stringAns+=str.charAt(inn);
+        int inn = index + 10;
+        while (str.charAt(inn) != ',') {
+            stringAns += str.charAt(inn);
         }
         return Double.parseDouble(stringAns);
     }
