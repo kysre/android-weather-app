@@ -20,15 +20,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kosalgeek.android.caching.FileCacher;
-
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import edu.sharif.ce.android_weather_app.MainActivity;
 import edu.sharif.ce.android_weather_app.Model.Location;
-import edu.sharif.ce.android_weather_app.Model.MainWeather;
 import edu.sharif.ce.android_weather_app.Model.Weather;
 import edu.sharif.ce.android_weather_app.R;
 import edu.sharif.ce.android_weather_app.RecyclerViewAdapter;
@@ -103,10 +98,10 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startAsyncTask();
                 cityNameEditText.setText("");
                 latitudeEditText.setText("");
                 longitudeEditText.setText("");
-                startAsyncTask();
             }
         });
     }
