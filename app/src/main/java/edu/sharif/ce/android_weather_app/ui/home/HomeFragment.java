@@ -1,5 +1,6 @@
 package edu.sharif.ce.android_weather_app.ui.home;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -69,12 +70,12 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         weatherRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listItems = new ArrayList<>();
         // TODO: add cached weather stuff
-        listItems.add(new RecyclerViewAdapter.ListItem(
-                "Sat", "18", "24", MainWeather.Clouds));
-        listItems.add(new RecyclerViewAdapter.ListItem(
-                "Sun", "20", "34", MainWeather.Clear));
-        listItems.add(new RecyclerViewAdapter.ListItem(
-                "Mon", "20", "34", MainWeather.Ash));
+//        listItems.add(new RecyclerViewAdapter.ListItem(
+//                "Sat", "18", "24", MainWeather.Clouds));
+//        listItems.add(new RecyclerViewAdapter.ListItem(
+//                "Sun", "20", "34", MainWeather.Clear));
+//        listItems.add(new RecyclerViewAdapter.ListItem(
+//                "Mon", "20", "34", MainWeather.Ash));
         adapter = new RecyclerViewAdapter(getActivity(), listItems, this);
         weatherRecyclerView.setAdapter(adapter);
 
@@ -142,9 +143,17 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
             return null;
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         @Override
         protected void onPostExecute(Void unused) {
-
+            ArrayList<Weather> weatherArrayList = Weather.getFullWeek();
+            ArrayList<RecyclerViewAdapter.ListItem> newListItems = new ArrayList<>();
+            for (Weather weather : weatherArrayList) {
+                newListItems.add(new RecyclerViewAdapter.ListItem(weather));
+            }
+            listItems.clear();
+            listItems.addAll(newListItems);
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -156,8 +165,11 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
 
     @Override
     public void onItemClicked(RecyclerViewAdapter.ListItem listItem) {
-        // TODO: pass weather data to WeatherViewFragment
         NavHostFragment.findNavController(HomeFragment.this).navigate(
-                HomeFragmentDirections.actionNavigationHomeToWeatherViewFragment());
+                HomeFragmentDirections.actionNavigationHomeToWeatherViewFragment(
+                        listItem.getFeelsLike(), listItem.getWindSpeed(), listItem.getMoonPhase(),
+                        listItem.getMaxTemp() + " / " + listItem.getMinTemp(),
+                        listItem.getWeatherCondition()
+                ));
     }
 }
