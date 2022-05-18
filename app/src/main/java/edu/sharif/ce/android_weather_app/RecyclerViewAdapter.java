@@ -97,7 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.feelsLike = String.format("%.0f", weather.getFeelsLike()) + "\u00B0";
             this.windSpeed = String.format("%.1f", weather.getWindSpeed()) + " km/s";
             this.moonPhase = String.format("%.0f", weather.getMoonPhase() * 100) + "%";
-            this.humidity = String.format("%.0f", weather.getHumidity() * 100) + "%";
+            this.humidity = String.format("%.0f", weather.getHumidity()) + "%";
         }
 
         public MainWeather getWeatherCondition() {
