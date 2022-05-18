@@ -45,7 +45,7 @@ public class Weather {
             weather.setFeelsLike(Weather.getFeelsLike(data[i]));
             weather.setWindSpeed(Weather.getSpeed(data[i]));
             weather.setWeather(Weather.getMainWeather(data[i]));
-            weather.setMoon_phase(Weather.getMoonPhase(data[i]));
+            weather.setMoonPhase(Weather.getMoonPhase(data[i]));
             weather.setHumidity(Weather.getHumidity(data[i]));
             answer.add(weather);
         }
