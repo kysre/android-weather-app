@@ -39,7 +39,7 @@ public class Weather {
             weather.setLowTemperature(temps[1]);
             weather.setFeelsLike(Weather.getFeelsLike(data[i]));
             weather.setWindSpeed(Weather.getSpeed(data[i]));
-            weather.setWeather(weather.getWeather());
+            weather.setWeather(Weather.getMainWeather(data[i]));
             answer.add(weather);
         }
         return answer;
@@ -48,7 +48,7 @@ public class Weather {
     private static MainWeather getMainWeather(String str) {
         int index = str.indexOf("main");
         String answer = "";
-        int i = index + 6;
+        int i = index + 7;
         while (str.charAt(i) != '"') {
             answer += str.charAt(i);
             i++;
