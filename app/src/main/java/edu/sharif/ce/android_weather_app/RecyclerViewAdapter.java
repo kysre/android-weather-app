@@ -89,7 +89,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @SuppressLint("DefaultLocale")
         public ListItem(Weather weather) {
             this.weather = weather;
-            this.dayName = "Sat";
+            this.dayName = weather.getDay();
             this.weatherCondition = weather.getWeather();
             this.minTemp = String.format("%.0f", weather.getLowTemperature()) + "\u00B0";
             this.maxTemp = String.format("%.0f", weather.getHighTemperature()) + "\u00B0";
