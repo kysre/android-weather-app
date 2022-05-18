@@ -1,6 +1,8 @@
 package edu.sharif.ce.android_weather_app.ui.home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +45,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
     private RecyclerView weatherRecyclerView;
     private RecyclerViewAdapter adapter;
     private ArrayList<RecyclerViewAdapter.ListItem> listItems;
+    private static boolean internet = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -98,14 +102,40 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (coordinatesSwitch.isChecked()) {
+                    if (!checkLongitudeLatitude()) return;
+                } else {
+                    if (cityNameEditText.getText().toString().equals("")) {
+                        Toast toast = Toast.makeText(getActivity(),
+                                "Please enter a valid city name!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
                 startAsyncTask();
-
-                cityNameEditText.setText("");
-                latitudeEditText.setText("");
-                longitudeEditText.setText("");
-
             }
         });
+    }
+
+    public boolean checkLongitudeLatitude() {
+        String toastStr = "";
+        if (longitudeEditText.getText().toString().equals("") ||
+                latitudeEditText.getText().toString().equals("")) {
+            toastStr = "Please input valid latitude and longitude!";
+        } else {
+            double longitude = Double.parseDouble(longitudeEditText.getText().toString());
+            double latitude = Double.parseDouble(latitudeEditText.getText().toString());
+            if (latitude >= 90 || latitude <= -90) {
+                toastStr = "Please input latitude between -90 and +90!";
+            } else if (longitude >= 180 || longitude <= -180) {
+                toastStr = "Please input longitude between -180 and +180!";
+            }
+        }
+        if (!toastStr.equals("")) {
+            Toast toast = Toast.makeText(getActivity(), toastStr, Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        return true;
     }
 
     public void startAsyncTask() {
@@ -138,11 +168,18 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if (isCoordinates) {
-                Weather.start(longitude, latitude);
-            } else {
-                Location location = Location.findCoordinate(cityName);
-                Weather.start(location.getLongitude(), location.getLatitude());
+            internet = true;
+            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            internet=cm.getActiveNetworkInfo() != null;
+            if (internet) {
+                if (isCoordinates) {
+                    Weather.start(longitude, latitude);
+                } else {
+                    Location location = Location.findCoordinate(cityName);
+                    if (location != null) {
+                        Weather.start(location.getLongitude(), location.getLatitude());
+                    }
+                }
             }
             return null;
         }
@@ -150,14 +187,29 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         @SuppressLint("NotifyDataSetChanged")
         @Override
         protected void onPostExecute(Void unused) {
-            ArrayList<Weather> weatherArrayList = Weather.getFullWeek();
-            ArrayList<RecyclerViewAdapter.ListItem> newListItems = new ArrayList<>();
-            for (Weather weather : weatherArrayList) {
-                newListItems.add(new RecyclerViewAdapter.ListItem(weather));
+            if (internet) {
+                cityNameEditText.setText("");
+                latitudeEditText.setText("");
+                longitudeEditText.setText("");
+                if (Location.isThereCity) {
+                    ArrayList<Weather> weatherArrayList = Weather.getFullWeek();
+                    ArrayList<RecyclerViewAdapter.ListItem> newListItems = new ArrayList<>();
+                    for (Weather weather : weatherArrayList) {
+                        newListItems.add(new RecyclerViewAdapter.ListItem(weather));
+                    }
+                    listItems.clear();
+                    listItems.addAll(newListItems);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast toast = Toast.makeText(getActivity(), "this city not found", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Location.isThereCity = true;
+                }
+            } else {
+                Toast toast = Toast.makeText(getActivity(), "does not internet connection", Toast.LENGTH_SHORT);
+                toast.show();
+                internet = true;
             }
-            listItems.clear();
-            listItems.addAll(newListItems);
-            adapter.notifyDataSetChanged();
         }
     }
 
