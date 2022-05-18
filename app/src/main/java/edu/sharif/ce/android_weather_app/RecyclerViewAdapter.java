@@ -137,37 +137,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         void onItemClicked(ListItem listItem);
     }
 
-    public Context getContext() {
-        return context;
-    }
-
-    public List<ListItem> getList() {
-        return list;
-    }
-
-    public SelectListener getListener() {
-        return listener;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-    public void setList(List<ListItem> list) {
-        this.list = list;
-    }
-
-    public void setListener(SelectListener listener) {
-        this.listener = listener;
-    }
-
-    @Override
-    public String toString() {
-        return "RecyclerViewAdapter{" +
-                "context=" + context +
-                ", list=" + list +
-                ", listener=" + listener +
-                '}';
-    }
-
 }

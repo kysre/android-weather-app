@@ -34,18 +34,5 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
-    public ActivityMainBinding getBinding() {
-        return binding;
-    }
 
-    public void setBinding(ActivityMainBinding binding) {
-        this.binding = binding;
-    }
-
-    @Override
-    public String toString() {
-        return "MainActivity{" +
-                "binding=" + binding +
-                '}';
-    }
 }
