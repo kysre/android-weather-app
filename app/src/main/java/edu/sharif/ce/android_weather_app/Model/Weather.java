@@ -201,9 +201,11 @@ public class Weather {
     private static double getHumidity(String str) {
         int index = str.indexOf("humidity");
         String stringAns = "";
-        int inn = index + 10;
-        while (str.charAt(inn) != ',') {
-            stringAns += str.charAt(inn);
+
+        int inn = index+10;
+        while (str.charAt(inn)!=','){
+            stringAns+=str.charAt(inn);
+            inn++;
         }
         return Double.parseDouble(stringAns);
     }
