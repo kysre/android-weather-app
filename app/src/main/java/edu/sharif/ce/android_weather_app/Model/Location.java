@@ -20,7 +20,7 @@ public class Location {
     }
 
     public static Location findCoordinate(String cityName){
-        String API_KEY = "82b27eae5e184cf6abe3549dddc17434";
+        String API_KEY = "e9eef37fb1d6417d9d14ae392d82ffb6";
         String encodeCityName = null;
         try {
             encodeCityName = URLEncoder.encode(cityName, StandardCharsets.UTF_8.name());
