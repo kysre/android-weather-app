@@ -14,6 +14,7 @@ import java.util.Locale;
 import edu.sharif.ce.android_weather_app.ui.home.HomeFragment;
 
 public class Weather {
+    private double humidity;
     private double temperature;
     private double highTemperature;
     private double lowTemperature;
@@ -45,6 +46,7 @@ public class Weather {
             weather.setWindSpeed(Weather.getSpeed(data[i]));
             weather.setWeather(Weather.getMainWeather(data[i]));
             weather.setMoonPhase(Weather.getMoonPhase(data[i]));
+            weather.setHumidity(Weather.getHumidity(data[i]));
             answer.add(weather);
         }
         return answer;
@@ -196,6 +198,20 @@ public class Weather {
         }
     }
 
+    private static double getHumidity(String str){
+        int index = str.indexOf("humidity");
+        String stringAns = "";
+        int inn = index+10;
+        while (str.charAt(inn)!=','){
+            stringAns+=str.charAt(inn);
+        }
+        return Double.parseDouble(stringAns);
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
     public static ArrayList<Weather> getFullWeek() {
         return fullWeek;
     }
@@ -278,5 +294,9 @@ public class Weather {
 
     public void setDay(String day) {
         this.day = day;
+    }
+
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
     }
 }

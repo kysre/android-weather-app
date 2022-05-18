@@ -43,5 +43,8 @@
         <argument
             android:name="mainWeather"
             app:argType="edu.sharif.ce.android_weather_app.Model.MainWeather" />
+        <argument
+            android:name="humidity"
+            app:argType="string" />
     </fragment>
 </navigation>

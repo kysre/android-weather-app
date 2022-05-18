@@ -85,6 +85,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private String moonPhase;
         private String feelsLike;
         private String windSpeed;
+        private String humidity;
 
         @SuppressLint("DefaultLocale")
         public ListItem(Weather weather) {
@@ -96,6 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.feelsLike = String.format("%.0f", weather.getFeelsLike()) + "\u00B0";
             this.windSpeed = String.format("%.1f", weather.getWindSpeed()) + " km/s";
             this.moonPhase = String.format("%.0f", weather.getMoonPhase() * 100) + "%";
+            this.humidity = String.format("%.0f", weather.getHumidity() * 100) + "%";
         }
 
         public MainWeather getWeatherCondition() {
@@ -124,6 +126,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public String getWindSpeed() {
             return windSpeed;
+        }
+
+        public String getHumidity() {
+            return humidity;
         }
     }
 

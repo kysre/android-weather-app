@@ -103,6 +103,9 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cityNameEditText.setText("");
+                latitudeEditText.setText("");
+                longitudeEditText.setText("");
                 startAsyncTask();
             }
         });
@@ -173,7 +176,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
                 HomeFragmentDirections.actionNavigationHomeToWeatherViewFragment(
                         listItem.getFeelsLike(), listItem.getWindSpeed(), listItem.getMoonPhase(),
                         listItem.getMaxTemp() + " / " + listItem.getMinTemp(),
-                        listItem.getWeatherCondition()
+                        listItem.getWeatherCondition(), listItem.getHumidity()
                 ));
     }
 }
