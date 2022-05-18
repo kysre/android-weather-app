@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class Weather {
     private double temperature;
+    private double highTemperature;
+    private double lowTemperature;
     private double feelsLike;
     private double windSpeed;
     private MainWeather weather;
@@ -31,20 +33,24 @@ public class Weather {
         ArrayList<Weather> answer = new ArrayList<>();
         for (int i = 2; i < 10; i++) {
             Weather weather = new Weather();
-            weather.setTemperature(Weather.getTemp(data[i]));
+            double[] temps = Weather.getTemp(data[i]);
+            weather.setTemperature(temps[2]);
+            weather.setHighTemperature(temps[0]);
+            weather.setLowTemperature(temps[1]);
             weather.setFeelsLike(Weather.getFeelsLike(data[i]));
             weather.setWindSpeed(Weather.getSpeed(data[i]));
             weather.setWeather(weather.getWeather());
+            answer.add(weather);
         }
         return answer;
     }
 
-    private static MainWeather getMainWeather(String str){
+    private static MainWeather getMainWeather(String str) {
         int index = str.indexOf("main");
         String answer = "";
         int i = index + 6;
-        while (str.charAt(i)!='"'){
-            answer+=str.charAt(i);
+        while (str.charAt(i) != '"') {
+            answer += str.charAt(i);
             i++;
         }
         return MainWeather.valueOf(answer);
@@ -65,17 +71,36 @@ public class Weather {
     private static double getFeelsLike(String str) {
         int index = str.indexOf("day", str.indexOf("day") + 8);
         String stringAns = str.substring(index + 5, index + 10);
+        stringAns = "";
+        int inn = index + 5;
+        while ((str.charAt(inn) >= '0' && str.charAt(inn) <= '9') || str.charAt(inn) == '.') {
+            stringAns += str.charAt(inn);
+            inn += 1;
+        }
         return Double.parseDouble(stringAns) - 273.15;
     }
 
-    private static double getTemp(String str) {
+    private static double[] getTemp(String str) {
         int forMin = str.indexOf("min");
         int forMax = str.indexOf("max");
         String minTemp = str.substring(forMin + 5, forMin + 10);
+        minTemp = "";
+        int inn = forMin + 5;
+        while ((str.charAt(inn) >= '0' && str.charAt(inn) <= '9') || str.charAt(inn) == '.') {
+            minTemp += str.charAt(inn);
+            inn += 1;
+        }
         String maxTemp = str.substring(forMax + 5, forMax + 10);
+        maxTemp = "";
+        inn = forMax + 5;
+        while ((str.charAt(inn) >= '0' && str.charAt(inn) <= '9') || str.charAt(inn) == '.') {
+            maxTemp += str.charAt(inn);
+            inn += 1;
+        }
         double realMaxTemp = Double.parseDouble(maxTemp);
         double realMinTemp = Double.parseDouble(minTemp);
-        return (realMaxTemp + realMinTemp) / 2 - 273.15;
+        double[] answers = {realMaxTemp - 273.15, realMinTemp - 273.15, (realMaxTemp + realMinTemp) / 2 - 273.15};
+        return answers;
     }
 
     public static String[] getDetail(double latitude, double longitude) {
@@ -107,6 +132,14 @@ public class Weather {
         return fullWeek;
     }
 
+    public double getHighTemperature() {
+        return highTemperature;
+    }
+
+    public double getLowTemperature() {
+        return lowTemperature;
+    }
+
     public double getTemperature() {
         return temperature;
     }
@@ -132,7 +165,7 @@ public class Weather {
     }
 
     public void setTemperature(double temperature) {
-         this.temperature = temperature;
+        this.temperature = temperature;
     }
 
     public void setFeelsLike(double feelsLike) {
@@ -153,5 +186,13 @@ public class Weather {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public void setHighTemperature(double highTemperature) {
+        this.highTemperature = highTemperature;
+    }
+
+    public void setLowTemperature(double lowTemperature) {
+        this.lowTemperature = lowTemperature;
     }
 }
