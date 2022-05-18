@@ -18,6 +18,7 @@ public class Weather {
     private double lowTemperature;
     private double feelsLike;
     private double windSpeed;
+    private double moon_phase;
     private MainWeather weather;
     private double latitude;
     private double longitude;
@@ -40,6 +41,7 @@ public class Weather {
             weather.setFeelsLike(Weather.getFeelsLike(data[i]));
             weather.setWindSpeed(Weather.getSpeed(data[i]));
             weather.setWeather(Weather.getMainWeather(data[i]));
+            weather.setMoon_phase(Weather.getMoonPhase(data[i]));
             answer.add(weather);
         }
         return answer;
@@ -56,6 +58,16 @@ public class Weather {
         return MainWeather.valueOf(answer);
     }
 
+    private static double getMoonPhase(String str){
+        int index = str.indexOf("moon_phase");
+        int i = index+12;
+        String answer = "";
+        while (str.charAt(i) !=','){
+            answer+=str.charAt(i);
+            i++;
+        }
+        return Double.parseDouble(answer);
+    }
 
     private static double getSpeed(String str) {
         int index = str.indexOf("wind_speed");
@@ -140,6 +152,10 @@ public class Weather {
         return lowTemperature;
     }
 
+    public double getMoon_phase() {
+        return moon_phase;
+    }
+
     public double getTemperature() {
         return temperature;
     }
@@ -194,5 +210,9 @@ public class Weather {
 
     public void setLowTemperature(double lowTemperature) {
         this.lowTemperature = lowTemperature;
+    }
+
+    public void setMoon_phase(double moon_phase) {
+        this.moon_phase = moon_phase;
     }
 }
