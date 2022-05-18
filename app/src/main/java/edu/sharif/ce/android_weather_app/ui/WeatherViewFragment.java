@@ -1,5 +1,6 @@
 package edu.sharif.ce.android_weather_app.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.Locale;
+import java.util.Objects;
+
+import edu.sharif.ce.android_weather_app.Model.MainWeather;
 import edu.sharif.ce.android_weather_app.R;
 import edu.sharif.ce.android_weather_app.databinding.FragmentWeatherViewBinding;
 
@@ -25,7 +30,8 @@ public class WeatherViewFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         FragmentWeatherViewBinding binding = FragmentWeatherViewBinding
                 .inflate(inflater, container, false);
         return binding.getRoot();
@@ -44,5 +50,19 @@ public class WeatherViewFragment extends Fragment {
         moonPhaseTextView = view.findViewById(R.id.moonPhaseTextView);
 
         // TODO: set TextViews and ImageView
+        MainWeather weatherCondition = WeatherViewFragmentArgs.fromBundle(getArguments()).getMainWeather();
+        int iconId = requireContext().getResources().getIdentifier(
+                weatherCondition.toString().toLowerCase(Locale.ROOT),
+                "drawable", requireContext().getPackageName());
+        iconImageView.setImageResource(iconId);
+
+        tempTextView.setText(WeatherViewFragmentArgs.fromBundle(getArguments()).getTemp());
+        weatherConditionTextView.setText(weatherCondition.toString());
+        feelsLikeTextView.setText(WeatherViewFragmentArgs.fromBundle(getArguments()).getFeelsLike());
+        windSpeedTextView.setText(WeatherViewFragmentArgs.fromBundle(getArguments()).getWindSpeed());
+        moonPhaseTextView.setText(WeatherViewFragmentArgs.fromBundle(getArguments()).getMoonPhase());
+
+        humidityTextView.setText("100%");
+
     }
 }

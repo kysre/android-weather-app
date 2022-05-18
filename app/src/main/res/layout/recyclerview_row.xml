@@ -36,7 +36,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/recyclerviewMinTempTextView"
+                android:id="@+id/recyclerviewMaxTempTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,7 +45,7 @@
                 android:textSize="26sp" />
 
             <TextView
-                android:id="@+id/recyclerviewMaxTempTextView"
+                android:id="@+id/recyclerviewMinTempTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

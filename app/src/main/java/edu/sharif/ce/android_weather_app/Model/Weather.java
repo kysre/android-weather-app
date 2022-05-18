@@ -1,10 +1,5 @@
 package edu.sharif.ce.android_weather_app.Model;
 
-import com.kosalgeek.android.caching.FileCacher;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,7 +19,7 @@ public class Weather {
     private double lowTemperature;
     private double feelsLike;
     private double windSpeed;
-    private double moon_phase;
+    private double moonPhase;
     private MainWeather weather;
     private double latitude;
     private double longitude;
@@ -49,7 +44,7 @@ public class Weather {
             weather.setFeelsLike(Weather.getFeelsLike(data[i]));
             weather.setWindSpeed(Weather.getSpeed(data[i]));
             weather.setWeather(Weather.getMainWeather(data[i]));
-            weather.setMoon_phase(Weather.getMoonPhase(data[i]));
+            weather.setMoonPhase(Weather.getMoonPhase(data[i]));
             answer.add(weather);
         }
         return answer;
@@ -213,8 +208,8 @@ public class Weather {
         return lowTemperature;
     }
 
-    public double getMoon_phase() {
-        return moon_phase;
+    public double getMoonPhase() {
+        return moonPhase;
     }
 
     public String getDay() {
@@ -277,8 +272,8 @@ public class Weather {
         this.lowTemperature = lowTemperature;
     }
 
-    public void setMoon_phase(double moon_phase) {
-        this.moon_phase = moon_phase;
+    public void setMoonPhase(double moonPhase) {
+        this.moonPhase = moonPhase;
     }
 
     public void setDay(String day) {
