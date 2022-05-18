@@ -2,7 +2,6 @@ package edu.sharif.ce.android_weather_app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,5 +135,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public interface SelectListener {
         void onItemClicked(ListItem listItem);
     }
-
 }

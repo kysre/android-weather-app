@@ -99,14 +99,40 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (coordinatesSwitch.isChecked()) {
+                    if (!checkLongitudeLatitude()) return;
+                } else {
+                    if (cityNameEditText.getText().toString().equals("")) {
+                        Toast toast = Toast.makeText(getActivity(),
+                                "Please enter a valid city name!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
                 startAsyncTask();
-
-                cityNameEditText.setText("");
-                latitudeEditText.setText("");
-                longitudeEditText.setText("");
-
             }
         });
+    }
+
+    public boolean checkLongitudeLatitude() {
+        String toastStr = "";
+        if (longitudeEditText.getText().toString().equals("") ||
+                latitudeEditText.getText().toString().equals("")) {
+            toastStr = "Please input valid latitude and longitude!";
+        } else {
+            double longitude = Double.parseDouble(longitudeEditText.getText().toString());
+            double latitude = Double.parseDouble(latitudeEditText.getText().toString());
+            if (latitude >= 90 || latitude <= -90) {
+                toastStr = "Please input latitude between -90 and +90!";
+            } else if (longitude >= 180 || longitude <= -180) {
+                toastStr = "Please input longitude between -180 and +180!";
+            }
+        }
+        if (!toastStr.equals("")) {
+            Toast toast = Toast.makeText(getActivity(), toastStr, Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        return true;
     }
 
     public void startAsyncTask() {
@@ -122,12 +148,6 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
 
         GetWeatherDataAsyncTask(HomeFragment fragment) {
             homeFragmentWeakReference = new WeakReference<>(fragment);
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-
         }
 
         @Override
@@ -159,7 +179,10 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
         @SuppressLint("NotifyDataSetChanged")
         @Override
         protected void onPostExecute(Void unused) {
-            if(Location.isThereCity) {
+            cityNameEditText.setText("");
+            latitudeEditText.setText("");
+            longitudeEditText.setText("");
+            if (Location.isThereCity) {
                 ArrayList<Weather> weatherArrayList = Weather.getFullWeek();
                 ArrayList<RecyclerViewAdapter.ListItem> newListItems = new ArrayList<>();
                 for (Weather weather : weatherArrayList) {
@@ -168,10 +191,10 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.Select
                 listItems.clear();
                 listItems.addAll(newListItems);
                 adapter.notifyDataSetChanged();
-            }else{
-                Toast toast=Toast.makeText(getActivity(),"this city not found",Toast.LENGTH_SHORT);
+            } else {
+                Toast toast = Toast.makeText(getActivity(), "this city not found", Toast.LENGTH_SHORT);
                 toast.show();
-                Location.isThereCity=true;
+                Location.isThereCity = true;
             }
         }
     }

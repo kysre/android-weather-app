@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import edu.sharif.ce.android_weather_app.ui.home.HomeFragment;
-
 public class Weather {
     private double humidity;
     private double temperature;
