@@ -1,4 +1,4 @@
- nj# android-weather-app
+android-weather-app
 
 ### Group Members:
 - Kasra Hajian - 99109411
